@@ -76,6 +76,17 @@ class Reader:
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
-        ##Look this up
     
+    @classmethod
+    def create(cls, name, favorite_genre, favorite_book):
+        reader = cls(name, favorite_genre, favorite_book)
+        reader.save()
+        return reader
 
+    def update(self):
+        sql = """
+            UPDATE readers SET name = ?, favorite_genre = ?, favorite_book = ?
+            WHERE name = ?
+        """
+        CURSOR.execute(sql, (self.name, self.favorite_genre, self.favorite_book, self.name))
+        CONN.commit()
