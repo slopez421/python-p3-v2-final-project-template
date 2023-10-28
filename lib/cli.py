@@ -21,7 +21,11 @@ def main():
 def menu():
     print("Please select an option:")
     print("0. Exit the program")
-    print("1. Some useful function")
+    print("1. List all readers.")
+    print("2. Find a reader by name.")
+    print("3. Find a reader by id.")
+    print("4. List all books.")
+    print("5. Find book by name.")
 
 
 if __name__ == "__main__":
