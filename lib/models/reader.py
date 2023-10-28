@@ -66,5 +66,16 @@ class Reader:
         CURSOR.execute(sql)
         CONN.commit()
     
+    def save(self):
+        sql = """
+            INSERT INTO readers (name, favorite_genre, favorite_book)
+            VALUES (?, ?, ?)
+        """
+        CURSOR.execute(sql, (self.name, self.favorite_genre, self.favorite_book))
+        CONN.commit()
+
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
+        ##Look this up
     
 
