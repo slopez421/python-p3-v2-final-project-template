@@ -45,3 +45,16 @@ class Reader:
         else: 
             raise ValueError("Please enter a non-empty string.")
         
+    @classmethod
+    def create_table(cls):
+        sql = """
+            CREATE TABLE IF NOT EXISTS readers (
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            favorite_genre TEXT,
+            favorite_book TEXT
+            )
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+    
