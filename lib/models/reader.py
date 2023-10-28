@@ -23,4 +23,14 @@ class Reader:
         else: 
             raise ValueError("Please enter a non-empty string.")
         
-   
+    @property
+    def favorite_genre(self):
+        return self._favorite_genre
+    
+    @favorite_genre.setter
+    def favorite_genre(self, favorite_genre):
+        if isinstance(favorite_genre, str) and len(favorite_genre):
+            self._favorite_genre = favorite_genre
+        else: 
+            raise ValueError("Please enter a non-empty string.")
+        
