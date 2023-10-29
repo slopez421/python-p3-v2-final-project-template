@@ -127,3 +127,23 @@ class Reader:
 
         rows = CURSOR.execute(sql).fetchall()
         return [cls.return_instance_from_db(row) for row in rows]
+    
+    @classmethod
+    def return_by_name(cls, name):
+        sql = """
+            SELECT * FROM readers
+            WHERE name = ?
+        """
+
+        row = CURSOR.execute(sql, (name, )).fetchone() 
+        return cls.return_instance_from_db(row) if row else None
+    
+    @classmethod
+    def return_by_favorite_book(cls, favorite_book):
+        sql = """
+            SELECT * FROM readers
+            WHERE favorite_book = ?
+        """
+
+        row = CURSOR.execute(sql, (favorite_book, )).fetchone() 
+        return cls.return_instance_from_db(row) if row else None

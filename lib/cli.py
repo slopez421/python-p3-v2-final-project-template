@@ -2,7 +2,9 @@
 
 from helpers import (
     exit_program,
-    list_readers
+    list_readers,
+    return_reader_by_name,
+    return_reader_by_favorite_book
 )
 
 
@@ -14,6 +16,11 @@ def main():
             exit_program()
         elif choice == "1":
             list_readers()
+        elif choice == "2":
+            return_reader_by_name()
+        elif choice =="3":
+            return_reader_by_favorite_book()
+
         else:
             print("Invalid choice")
 
