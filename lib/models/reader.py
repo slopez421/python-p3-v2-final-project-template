@@ -102,3 +102,28 @@ class Reader:
          
         del type(self).all[self.id]
         self.id = None
+    
+    @classmethod
+    def return_instance_from_db(cls, row):
+
+        reader = cls.all.get(row[0])
+
+        if reader:
+            reader.name = row[1]
+            reader.favorite_genre = row[2]
+            reader.favorite_book = row[3]
+        else: 
+            reader = cls(row[1], row[2])
+            reader.id = row[0]
+            cls.all[reader.id] = reader
+
+        return reader
+    
+    @classmethod
+    def get_all(cls):
+        sql = """
+            SELECT * FROM readers
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+        return [cls.return_instance_from_db(row) for row in rows]
