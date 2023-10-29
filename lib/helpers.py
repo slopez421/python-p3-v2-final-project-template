@@ -6,6 +6,6 @@ def exit_program():
     exit()
 
 def list_readers():
-    readers = Reader.all
+    readers = Reader.get_all()
     for reader in readers:
         print(reader.name)

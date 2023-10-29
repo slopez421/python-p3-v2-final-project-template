@@ -113,7 +113,7 @@ class Reader:
             reader.favorite_genre = row[2]
             reader.favorite_book = row[3]
         else: 
-            reader = cls(row[1], row[2])
+            reader = cls(row[1], row[2], row[3])
             reader.id = row[0]
             cls.all[reader.id] = reader
 
