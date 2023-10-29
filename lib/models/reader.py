@@ -90,3 +90,15 @@ class Reader:
         """
         CURSOR.execute(sql, (self.name, self.favorite_genre, self.favorite_book, self.name))
         CONN.commit()
+  
+    def delete(self):
+        sql = """
+            DELETE FROM readers
+            WHERE id = ?
+        """
+        
+        CURSOR.execute(sql)
+        CONN.commit()
+         
+        del type(self).all[self.id]
+        self.id = None
