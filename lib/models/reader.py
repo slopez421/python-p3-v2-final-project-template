@@ -147,3 +147,5 @@ class Reader:
 
         row = CURSOR.execute(sql, (favorite_book, )).fetchone() 
         return cls.return_instance_from_db(row) if row else None
+    
+                
