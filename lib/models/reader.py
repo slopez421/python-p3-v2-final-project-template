@@ -94,10 +94,10 @@ class Reader:
     def delete(self):
         sql = """
             DELETE FROM readers
-            WHERE id = ?
+            WHERE name = ?
         """
         
-        CURSOR.execute(sql)
+        CURSOR.execute(sql, (self.name, ))
         CONN.commit()
          
         del type(self).all[self.id]
@@ -148,4 +148,15 @@ class Reader:
         row = CURSOR.execute(sql, (favorite_book, )).fetchone() 
         return cls.return_instance_from_db(row) if row else None
     
-                
+    def update_reader(self):
+        sql = """
+            UPDATE readers
+            SET name = ?,
+                favorite_genre = ?,
+                favorite_book = ?
+
+            WHERE id = ?
+        """
+
+        CURSOR.execute(sql, (self.name, self.favorite_genre, self.favorite_book, self.id))
+        CONN.commit()
