@@ -3,7 +3,7 @@
 from helpers import (
     exit_program,
     list_readers,
-    return_reader_by_name,
+    return_reader_by_id,
     return_reader_by_favorite_book,
     create_reader,
     delete_reader,
@@ -38,23 +38,26 @@ def menu():
     print("Please select an option:")
     print("0. Exit the program")
     print("1. See all Readers")
-""" print("2. Find a reader by name.")
-    print("3. Find a reader by their favorite book.")
-    print("4. Create a new reader.")
-    print("5. Delete reader by name.")
-    print("6. Update reader by name.")"""
+    print("2. List all books")
 
 def reader_menu_choices():
+    print("0. Exit the program.")
     print("Please select the corresponding number to see the reader's details.")
     list_readers()
 
+def reader_details_menu():
+    print("Please select an option.")
+    print("0. Exit the program.")
+    print("1. Update Reader")
+    print("2. Delete Reader")
+    print("3. See reader's books.")
     
 def reader_info_menu():
-    print("Select a reader to see the details.")
+    reader_menu_choices()
     choice = input("> ")
     while True:
-        if choice == "1":
-            print('1. Pressed.')
+        return_reader_by_id(choice)
+        reader_details_menu()
 
 
 if __name__ == "__main__":

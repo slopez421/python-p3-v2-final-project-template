@@ -129,13 +129,13 @@ class Reader:
         return [cls.return_instance_from_db(row) for row in rows]
     
     @classmethod
-    def return_by_name(cls, name):
+    def return_by_id(cls, id):
         sql = """
             SELECT * FROM readers
-            WHERE name = ?
+            WHERE id = ?
         """
 
-        row = CURSOR.execute(sql, (name, )).fetchone() 
+        row = CURSOR.execute(sql, (id, )).fetchone() 
         return cls.return_instance_from_db(row) if row else None
     
     @classmethod
@@ -155,8 +155,8 @@ class Reader:
                 favorite_genre = ?,
                 favorite_book = ?
 
-            WHERE id = ?
+            WHERE name = ?
         """
 
-        CURSOR.execute(sql, (self.name, self.favorite_genre, self.favorite_book, self.id))
+        CURSOR.execute(sql, (self.name, self.favorite_genre, self.favorite_book, self.name))
         CONN.commit()

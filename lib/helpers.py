@@ -10,10 +10,9 @@ def list_readers():
     for reader in readers:
         print(f"{reader.id}: {reader.name}")
 
-def return_reader_by_name():
-    name = input("Enter the reader's name: ")
-    reader = Reader.return_by_name(name)
-    print(reader) if reader else print(f'Reader {name} not found.')
+def return_reader_by_id(id_):
+    reader = Reader.return_by_id(id_)
+    print(reader) if reader else print(f'Reader {id_} not found.')
 
 def return_reader_by_favorite_book():
     book = input("Enter the reader's favorite book: ")
