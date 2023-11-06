@@ -56,8 +56,10 @@ def reader_info_menu():
     reader_menu_choices()
     choice = input("> ")
     while True:
-        return_reader_by_id(choice)
-        reader_details_menu()
+        if return_reader_by_id(choice):
+            reader_details_menu()
+        else: 
+            return
 
 
 if __name__ == "__main__":
