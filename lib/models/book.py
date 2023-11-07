@@ -49,6 +49,18 @@ class Book:
         else:
             raise ValueError("Please make sure reader_id is an integer that references a reader in the database.")
     
+    @classmethod
+    def create_table(cls):
+        sql = """ 
+            CREATE TABLE IF NOT EXISTS books (
+            id INTEGER PRIMARY KEY,
+            title TEXT,
+            page_count INTEGER,
+            reader_id INTEGER,
+            FOREIGN KEY (reader_id) REFERENCES readers(id))
+            """
+        CURSOR.execute(sql)
+        CONN.commit()
 
 
 #ipdb.set_trace()
