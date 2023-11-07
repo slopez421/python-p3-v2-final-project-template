@@ -69,5 +69,43 @@ class Book:
         """
         CURSOR.execute(sql)
         CONN.commit()
-        
+    
+    def save(self):
+        sql = """
+            INSERT INTO books (title, page_count, reader_id)
+            VALUES (?, ?, ?)
+        """
+        CURSOR.execute(sql, (self.title, self.page_count, self.reader_id))
+        CONN.commit()
+
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
+    
+    def update(self):
+        sql = """
+            UPDATE books
+            SET title = ?, page_count = ?, reader_id = ?
+            WHERE id = ?
+        """
+
+        CURSOR.execute(sql, (self.title, self.page_count, self.reader_id, self.id))
+        CONN.commit()
+
+    def delete(self):
+        sql = """
+            DELETE FROM readers
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+        del type(self).all[self.id]
+        self.id = None
+    
+    @classmethod
+    def create(cls, name, page_count, reader_id):
+        book = cls(name, page_count, reader_id)
+        book.save()
+        return book
+    
+    
 #ipdb.set_trace()
