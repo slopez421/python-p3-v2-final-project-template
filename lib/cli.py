@@ -20,16 +20,22 @@ def main():
         elif choice == "1":
             reader_menu_choices()
             while True:
-                choice = int(input("> "))
-                if choice == 0:
+                choice = input("> ")
+                if choice == "0":
                     exit_program()
                 elif choice:
                     return_reader_by_id(choice)
-                    reader_details_menu()
                     while True:
-                        choice = int(input("> ")) 
-                        if choice == 0:
+                        reader_details_menu()
+                        choice = input("> ")
+                        if choice == "0":
                             exit_program()
+                        elif choice == "1":
+                            update_reader()
+                        elif choice == "2":
+                            delete_reader()
+                        else:
+                            print("Invalid choice.")
                 else:
                     print("invalid choice.")
                 reader_menu_choices()
@@ -55,8 +61,8 @@ def menu():
     print("1. See all Readers")
 
 def reader_menu_choices():
-    print("0. Exit the program.")
     print("Please select the corresponding number to see the reader's details.")
+    print("0. Exit the program.")
     list_readers()
 
 def reader_details_menu():

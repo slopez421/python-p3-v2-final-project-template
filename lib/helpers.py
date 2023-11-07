@@ -30,25 +30,26 @@ def create_reader():
         print("Error creating reader: ", exc)
 
 def delete_reader():
-    name = input("Enter the reader's name you wish to delete:")
-    if  reader := Reader.return_by_name(name):
+    id_ = input("Enter the reader's id you wish to delete:")
+    if  reader := Reader.return_by_id(id_):
         reader.delete()
-        print(f'Reader {name} has been deleted.')
+        print(f'Success! Reader {id_} has been deleted.')
     else:
-        print(f'Reader {name} not found.')
+        print(f'Reader {id_} not found.')
 
 def update_reader():
-    name = input("Enter reader's name: ")
-    if reader := Reader.return_by_name(name):
+    id_ = input("Enter reader's id: ")
+    if reader := Reader.return_by_id(id_):
         try:
-            name = input("Enter reader's name: ")
+            name = input("Enter reader's new name: ")
             reader.name = name
-            favorite_genre = input("Enter reader's favorite genre: ")
+            favorite_genre = input("Enter reader's new favorite genre: ")
             reader.favorite_genre = favorite_genre
-            favorite_book = input("Enter reader's favorite book: ")
+            favorite_book = input("Enter reader's new favorite book: ")
             reader.favorite_book = favorite_book
             reader.update()
+            print(f'Success! {reader.name} has been updated.')
         except Exception as exc:
             print("Error updating reader: ", exc)
-        else:
-            print(f"Reader {name} not found.")
+    else:
+        print(f"Reader {id_} not found.")
