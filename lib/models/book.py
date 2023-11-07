@@ -107,5 +107,47 @@ class Book:
         book.save()
         return book
     
+    @classmethod
+    def return_instance_from_db(cls, row):
+        book = cls.all.get(row[0])
+        if book:
+            book.title = row[1]
+            book.page_count = row[2]
+            book.reader_id = row[3]
+        else:
+            book = cls(row[1], row[2], row[3])
+            book.id = row[0]
+            cls.all[book.id] = book
+        return book
+    
+    @classmethod
+    def get_all(cls):
+        sql = """
+            SELECT * FROM books
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.return_instance_from_db(row) for row in rows]
+    
+    @classmethod
+    def return_by_id(cls, id):
+        sql = """
+            SELECT * FROM books
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.return_instance_from_db(row) if row else None
+    
+    @classmethod
+    def return_by_title(cls, title): 
+        sql = """
+            SELECT * 
+            FROM books 
+            WHERE title = ?
+        """
+
+        row = CURSOR.execute(sql, (title,)).fetchone()
+        return cls.return_instance_from_db(row) if row else None
     
 #ipdb.set_trace()
