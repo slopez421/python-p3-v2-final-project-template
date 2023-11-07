@@ -13,5 +13,6 @@ alyssa = Reader.create("Alyssa", "Horror", "Harry Potter")
 yax = Reader.create("Yaxenis", "Fantasy", "Game of Thrones")
 shania = Reader.create("Shania", "Young Adult Fiction", "The Cruel Prince")
 
+Book.create_table()
 book_1 = Book("Cruel Prince", 102, 3)
 ipdb.set_trace()
