@@ -19,7 +19,13 @@ def main():
             exit_program()
         elif choice == "1":
             list_readers()
-            reader_info_menu()
+            reader_details_menu()
+            while True:
+                if choice == "1":
+                    print("1 was choisen")
+                    reader_details_menu()
+                else:
+                    print("invalid choice.")
         #elif choice == "2":
             #return_reader_by_name()
         #elif choice =="3":
@@ -38,7 +44,6 @@ def menu():
     print("Please select an option:")
     print("0. Exit the program")
     print("1. See all Readers")
-    print("2. List all books")
 
 def reader_menu_choices():
     print("0. Exit the program.")
@@ -52,15 +57,6 @@ def reader_details_menu():
     print("2. Delete Reader")
     print("3. See reader's books.")
     
-def reader_info_menu():
-    reader_menu_choices()
-    choice = input("> ")
-    while True:
-        if return_reader_by_id(choice):
-            reader_details_menu()
-        else: 
-            return
-
 
 if __name__ == "__main__":
     main()
