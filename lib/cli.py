@@ -18,14 +18,21 @@ def main():
         if choice == "0":
             exit_program()
         elif choice == "1":
-            list_readers()
-            reader_details_menu()
+            reader_menu_choices()
             while True:
-                if choice == "1":
-                    print("1 was choisen")
+                choice = int(input("> "))
+                if choice == 0:
+                    exit_program()
+                elif choice:
+                    return_reader_by_id(choice)
                     reader_details_menu()
+                    while True:
+                        choice = int(input("> ")) 
+                        if choice == 0:
+                            exit_program()
                 else:
                     print("invalid choice.")
+                reader_menu_choices()
         #elif choice == "2":
             #return_reader_by_name()
         #elif choice =="3":
@@ -38,6 +45,8 @@ def main():
         # update_reader()
         else:
             print("Invalid choice")
+        menu()
+        choice = input("> ")
 
 
 def menu():
