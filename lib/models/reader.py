@@ -8,6 +8,7 @@ class Reader:
         self.name = name
         self.favorite_genre = favorite_genre
         self.favorite_book = favorite_book
+        self.id = id
     
     def __repr__(self):
         return f"<Reader {self.name}'s favorite book is {self.favorite_book}. Reader {self.name}'s favorite genre is {self.favorite_genre}."
@@ -61,7 +62,7 @@ class Reader:
     @classmethod
     def drop_table(cls):
         sql = """
-            DROP TABLE IF EXISTS readers
+            DROP TABLE IF EXISTS readers;
         """
         CURSOR.execute(sql)
         CONN.commit()
