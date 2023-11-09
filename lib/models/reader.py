@@ -149,3 +149,14 @@ class Reader:
         row = CURSOR.execute(sql, (favorite_book, )).fetchone() 
         return cls.return_instance_from_db(row) if row else None
     
+    def books(self):
+        from models.book import Book
+        sql = """
+            SELECT *
+            FROM books 
+            WHERE reader_id = ?
+            """
+        CURSOR.execute(sql, (self.id,))
+
+        rows = CURSOR.fetchall()
+        return [Book.return_instance_from_db(row) for row in rows]

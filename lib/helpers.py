@@ -1,5 +1,6 @@
 # lib/helpers.py
 from models.reader import Reader
+from models.book import Book
 
 def exit_program():
     print("Goodbye!")
@@ -53,3 +54,20 @@ def update_reader():
             print("Error updating reader: ", exc)
     else:
         print(f"Reader {id_} not found.")
+
+def list_books_by_reader(id_):
+    if reader := Reader.return_by_id(id_):
+        books = reader.books()
+        for book in books:
+            print(book)
+    else:
+        print(f'Reader {id_} not found.')
+
+def create_book(reader_id):
+    title = input("Enter the book's title: ")
+    page_count = input("Enter the book's page count: ")
+    try:
+        book = Book.create(title, int(page_count), int(reader_id))
+        print(f'Success! {book.title} has been added.')
+    except Exception as exc:
+        print('Error adding new book: ', exc)
