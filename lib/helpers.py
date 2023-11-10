@@ -30,16 +30,14 @@ def create_reader():
     except Exception as exc:
         print("Error creating reader: ", exc)
 
-def delete_reader():
-    id_ = input("Enter the reader's id you wish to delete:")
+def delete_reader(id_):
     if  reader := Reader.return_by_id(id_):
         reader.delete()
         print(f'Success! Reader {id_} has been deleted.')
     else:
         print(f'Reader {id_} not found.')
 
-def update_reader():
-    id_ = input("Enter reader's id: ")
+def update_reader(id_):
     if reader := Reader.return_by_id(id_):
         try:
             name = input("Enter reader's new name: ")

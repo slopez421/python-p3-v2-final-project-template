@@ -8,6 +8,8 @@ import ipdb
 
 Reader.drop_table()
 Reader.create_table()
+Book.drop_table()
+Book.create_table()
 
 alyssa = Reader.create("Alyssa", "Horror", "Harry Potter")
 yax = Reader.create("Yaxenis", "Fantasy", "Game of Thrones")

@@ -35,13 +35,14 @@ def main():
                         if choice == "0":
                             exit_program()
                         elif choice == "1":
-                            update_reader()
+                            update_reader(reader_id_choice)
                         elif choice == "2":
-                            delete_reader()
+                            delete_reader(reader_id_choice)
+                            # have to find a way to loop back to the previous menu once deleted.
                         elif choice == "3":
                             list_books_by_reader(reader_id_choice)
                         elif choice == "4":
-                            create_book(reader_id = reader_id_choice)
+                            create_book(reader_id_choice)
                         else:
                             print("Invalid choice.")
                 else:
