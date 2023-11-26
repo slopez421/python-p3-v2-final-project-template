@@ -14,7 +14,7 @@ class Book:
         self.id = id
 
     def __repr__(self):
-        return f"<{self.title} has {self.page_count} pages and belongs to reader {self.reader_id}.>"
+        return f"<{self.id}. {self.title} has {self.page_count} pages and belongs to reader {self.reader_id}.>"
 
     @property
     def title(self):

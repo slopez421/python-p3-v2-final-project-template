@@ -69,3 +69,18 @@ def create_book(reader_id):
         print(f'Success! {book.title} has been added.')
     except Exception as exc:
         print('Error adding new book: ', exc)
+
+def update_book(reader_id_choice):
+    id_ = input("Enter the book id you'd like to update: ")
+    if book := Book.return_by_id(id_):
+        try: 
+            title = input("Enter the book's new title: ")
+            book.title = title
+            page_count = input("Enter the book's page count: ")
+            book.page_count = page_count
+            book.reader_id = reader_id_choice
+            book.update()
+        except Exception as exc:
+            print("Error updating book: ", exc)
+    else:
+        print("Book not found.")
