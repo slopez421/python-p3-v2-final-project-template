@@ -6,17 +6,20 @@ from models.reader import Reader
 from models.book import Book
 import ipdb
 
-Reader.drop_table()
-Reader.create_table()
-Book.drop_table()
-Book.create_table()
+def reset_database():
 
-alyssa = Reader.create("Alyssa", "Horror", "Harry Potter")
-yax = Reader.create("Yaxenis", "Fantasy", "Game of Thrones")
-shania = Reader.create("Shania", "Young Adult Fiction", "The Cruel Prince")
+    Reader.drop_table()
+    Book.drop_table()
 
-Book.create_table()
-book_1 = Book.create("Cruel Prince", 102, 3)
-book_2 = Book.create("They Both Die at the End", 1001, 2)
-book_3 = Book.create("ACOSF", 1211, 1)
+    Reader.create_table()
+    Book.create_table()
+
+    Reader.create("Susan", "Horror")
+    Reader.create("Jeff", "Fantasy")
+    Reader.create("Shania", "Romance")
+    Book.create("The Cruel Prince", 300, 1)
+    Book.create("The Wicked King", 400, 2)
+    Book.create("The Queen of Nothing", 500, 3)
+    
+reset_database()
 ipdb.set_trace()

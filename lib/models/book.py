@@ -7,15 +7,14 @@ class Book:
     all = {}
 
     def __init__(self, title, page_count, reader_id, id=None):
-
         self.title = title
         self.page_count = page_count
         self.reader_id = reader_id
         self.id = id
 
     def __repr__(self):
-        return f"<{self.id}. {self.title} has {self.page_count} pages and belongs to reader {self.reader_id}.>"
-
+        return f"{self.id}. {self.title} has {self.page_count} page."
+    
     @property
     def title(self):
         return self._title
@@ -25,7 +24,7 @@ class Book:
         if isinstance(title, str) and len(title):
             self._title = title
         else:
-            raise ValueError("Oops! Title must be a non-empty string.")
+            raise ValueError("title should be a non-empty string.")
     
     @property
     def page_count(self):
@@ -36,7 +35,7 @@ class Book:
         if isinstance(page_count, int):
             self._page_count = page_count
         else:
-            raise ValueError("Page count must be a number.")
+            raise ValueError("page_count must be an integer.")
     
     @property
     def reader_id(self):
@@ -44,29 +43,30 @@ class Book:
     
     @reader_id.setter
     def reader_id(self, reader_id):
-        if isinstance(reader_id, int) and Reader.return_by_id(reader_id):
+        if isinstance(reader_id, int) and Reader.find_by_id(reader_id):
             self._reader_id = reader_id
         else:
             raise ValueError("Please make sure reader_id is an integer that references a reader in the database.")
     
     @classmethod
     def create_table(cls):
-        sql = """ 
+        sql = """
             CREATE TABLE IF NOT EXISTS books (
             id INTEGER PRIMARY KEY,
             title TEXT,
             page_count INTEGER,
             reader_id INTEGER,
-            FOREIGN KEY (reader_id) REFERENCES readers(id))
-            """
+            FOREIGN KEY (reader_id) REFERENCES readers(id)
+            )"""
         CURSOR.execute(sql)
         CONN.commit()
 
     @classmethod
     def drop_table(cls):
-        sql = """ 
-            DROP TABLE IF EXISTS books;
-        """
+        sql = """
+            DROP TABLE IF EXISTS books
+            """
+        
         CURSOR.execute(sql)
         CONN.commit()
     
@@ -74,41 +74,42 @@ class Book:
         sql = """
             INSERT INTO books (title, page_count, reader_id)
             VALUES (?, ?, ?)
-        """
+            """
+        
         CURSOR.execute(sql, (self.title, self.page_count, self.reader_id))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
     
+    @classmethod
+    def create(cls, title, page_count, reader_id):
+        book = cls(title, page_count, reader_id)
+        book.save()
+        return book
+    
     def update(self):
         sql = """
-            UPDATE books
+            UPDATE books 
             SET title = ?, page_count = ?, reader_id = ?
-            WHERE id = ?
-        """
-
+            WHERE id = ?"""
+        
         CURSOR.execute(sql, (self.title, self.page_count, self.reader_id, self.id))
         CONN.commit()
-
+    
     def delete(self):
         sql = """
-            DELETE FROM readers
-            WHERE id = ?
-        """
+            DELETE FROM books
+            WHERE id = ?"""
+        
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
+
         del type(self).all[self.id]
         self.id = None
     
     @classmethod
-    def create(cls, name, page_count, reader_id):
-        book = cls(name, page_count, reader_id)
-        book.save()
-        return book
-    
-    @classmethod
-    def return_instance_from_db(cls, row):
+    def instance_from_db(cls, row):
         book = cls.all.get(row[0])
         if book:
             book.title = row[1]
@@ -119,35 +120,30 @@ class Book:
             book.id = row[0]
             cls.all[book.id] = book
         return book
-    
+
     @classmethod
     def get_all(cls):
         sql = """
-            SELECT * FROM books
-        """
-
+            SELECT * FROM books"""
+        
         rows = CURSOR.execute(sql).fetchall()
-
-        return [cls.return_instance_from_db(row) for row in rows]
+        return [cls.instance_from_db(row) for row in rows]
     
     @classmethod
-    def return_by_id(cls, id):
+    def find_by_id(cls, id):
         sql = """
             SELECT * FROM books
-            WHERE id = ?
-        """
+            WHERE id = ?"""
+        
         row = CURSOR.execute(sql, (id,)).fetchone()
-        return cls.return_instance_from_db(row) if row else None
+        return cls.instance_from_db(row) if row else None
     
     @classmethod
-    def return_by_title(cls, title): 
+    def find_by_title(cls, title):
         sql = """
-            SELECT * 
-            FROM books 
-            WHERE title = ?
-        """
-
+            SELECT * FROM books
+            WHERE title = ?"""
+        
         row = CURSOR.execute(sql, (title,)).fetchone()
-        return cls.return_instance_from_db(row) if row else None
+        return cls.instance_from_db(row) if row else None
     
-#ipdb.set_trace()
