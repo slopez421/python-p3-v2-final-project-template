@@ -7,7 +7,7 @@ Through CLI menus, you can add Readers to the database or Books that belong to e
 
 Similarly, you may add Books belonging to that Reader to track, update a Book, or delete a Book. 
 
-#### CLI Menus
+## CLI Menus
 
 The CLI launches with an introductory menu (menu() )that gives the user two choices: you can exit the program or see all Readers. 
 
@@ -29,3 +29,32 @@ If the user chooses to see all books associated with the Reader, the reader's id
 This new menu is book_menu_choices(). It calls in a list of books associated with the current reader and produces an option for the user to either add a new book to the database, update a current book in the databse, or delete a book in the database. However, through validation input, a Reader can't delete a book that either doesn't exist or belongs to another Reader. 
 
 Every menu has the choice to go back to the previous menu to keep the user looped until they decide to exit the program.
+
+## Data Models
+
+There are two files for our One-To-Many relationships. 
+The reader.py is our Reader class. Every Reader intilializes with a name and favorite_genre that are saved as properties with setter functions in place to validate user input. The id for each object is handled by our ORM methods. The object is mapped to the Readers table as a new row and saved to the Reader.all dictionary. 
+
+The book.py is our Book class. Every Book intilializes with a title, page_count, and reader_id that are saved as properties with setter functions in place to validate user input. The id for each object is handled by our ORM methods. The object is mapped to the Books table as a new row and saved to the Book.all dictionary. Our reader_id attribute is also specified as a foreign key in the create_table method when it is mapped to the table so it relates to the id in the Reader table. 
+
+## Helper functions
+
+Our helper.py file imports functions from both the Book class and the Reader class. 
+
+list_all_readers() returns all readers in the Reader database.
+
+creater_reader() takes in user input and saves the user's answers as attributes to create a new Reader instance and persists that object to the Reader table while validating user input.
+
+return_reader_by_choice(choice) takes in the user's choice, passed down as the id for the Reader, and returns one reader from the database whose ID matches the choice. 
+
+update_reader(id_) takes in user input and saves the values to the Python object whose id matches the Reader choice. Then it persists that data to the Readers table. 
+
+delete_reader(id_) is passed in the user choice (id) and deletes the Reader instance whose values match the corresponding row in the database. The function then deletes the instance from the dictionary and the row. 
+
+list_books(id_) takes in the user's choice as the current Reader id and returns a list of books associated with that Reader. 
+
+create_book(reader_id) takes in user input and saves the user's answers as attributes to create a new Book instance and persists that object to the Book table while validating user input. By passing in reader_id, we also ensure this book is automatically assigned to the current Reader whose menu we're in. 
+
+update_book(reader_id) takes in user input and saves the values to the Python object whose reader_id matches the Reader choice. Then it persists that data to the Books table.
+
+delete_book(reader_id) is passed in the user choice (reader_id) and deletes the Book instance whose values match the corresponding row in the database. The function then deletes the instance from the dictionary and the row while ensuring the reader_id matches the current Reader the user is in. 
