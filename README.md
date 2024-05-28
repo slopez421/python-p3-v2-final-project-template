@@ -1,172 +1,31 @@
-# Phase 3 CLI+ORM Project Template
+### Library CLI Application
 
-## Learning Goals
+Welcome to the reader library!
+If you've ever found yourself wanting to keep track of the books you've read but have poor memory (like me!), this application is perfect for you. 
 
-- Discuss the basic directory structure of a CLI.
-- Outline the first steps in building a CLI.
+Through CLI menus, you can add Readers to the database or Books that belong to each Reader. You may see all Readers, update a Reader, or delete that Reader if they no longer wish to use the application. 
 
----
+Similarly, you may add Books belonging to that Reader to track, update a Book, or delete a Book. 
 
-## Introduction
+#### CLI Menus
 
-You now have a basic idea of what constitutes a CLI. Fork and clone this lesson
-for a project template for your CLI.
+The CLI launches with an introductory menu (menu() )that gives the user two choices: you can exit the program or see all Readers. 
 
-Take a look at the directory structure:
+If the reader chooses to see all readers, they are brought to the next menu (all_readers_menu() ). 
 
-```console
-.
-├── Pipfile
-├── Pipfile.lock
-├── README.md
-└── lib
-    ├── models
-    │   ├── __init__.py
-    │   └── model_1.py
-    ├── cli.py
-    ├── debug.py
-    └── helpers.py
-```
+The all_readers_menu() calls in text options that correspond to an Ifelif set of options so each number that the User presses then calls different functions. 
 
-Note: The directory also includes two files named `CONTRIBUTING.md` and
-`LICENSE.md` that are specific to Flatiron's curriculum. You can disregard or
-delete the files if you want.
+In this menu, the user is presented with the option to exit the program, go back to the previous menu, add a new Reader, while simulatanously being presented with all the readers in the database. The corresponding number in the list next to the Reader is actually the User ID so choosing the option (i.e. the id choice) is then saved into the next menu as a variable so we can pass it into the following functions. 
 
----
+If the user chooses to add a new reader, they are presented with a series of input() functions that validates user input through the helper function create_reader() listed in helpers.py. 
+Choosing any of the numerical options will present the user with the a new menu (indiv_reader_choices) that displays options for an individual reader. Here, the user can update the reader, delete the reader, or see the reader's associated books. 
 
-## Generating Your Environment
+Updating the Reader produces another series of input() entries for validating user input that connect to a corresponding function int the helper.py file. The user is then looped back to the same menu once the new Reader is added and is displayed in the list of Readers. 
 
-You might have noticed in the file structure- there's already a Pipfile!
+Deleting a Reader will delete that Reader from the database and delete it from the corresponding dictionary of Reader objects in reader.py.
 
-Install any additional dependencies you know you'll need for your project by
-adding them to the `Pipfile`. Then run the commands:
+If the user chooses to see all books associated with the Reader, the reader's id (aka the number) is passed down to the next menu as a saved variable so we can see the books where reader_id = the choice number. 
 
-```console
-pipenv install
-pipenv shell
-```
+This new menu is book_menu_choices(). It calls in a list of books associated with the current reader and produces an option for the user to either add a new book to the database, update a current book in the databse, or delete a book in the database. However, through validation input, a Reader can't delete a book that either doesn't exist or belongs to another Reader. 
 
----
-
-## Generating Your CLI
-
-A CLI is, simply put, an interactive script and prompts the user and performs
-operations based on user input.
-
-The project template has a sample CLI in `lib/cli.py` that looks like this:
-
-```py
-# lib/cli.py
-
-from helpers import (
-    exit_program,
-    helper_1
-)
-
-
-def main():
-    while True:
-        menu()
-        choice = input("> ")
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
-            helper_1()
-        else:
-            print("Invalid choice")
-
-
-def menu():
-    print("Please select an option:")
-    print("0. Exit the program")
-    print("1. Some useful function")
-
-
-if __name__ == "__main__":
-    main()
-```
-
-The helper functions are located in `lib/helpers.py`:
-
-```py
-# lib/helpers.py
-
-def helper_1():
-    print("Performing useful function#1.")
-
-
-def exit_program():
-    print("Goodbye!")
-    exit()
-```
-
-You can run the template CLI with `python lib/cli.py`, or include the shebang
-and make it executable with `chmod +x`. The template CLI will ask for input, do
-some work, and accomplish some sort of task.
-
-Past that, CLIs can be whatever you'd like, as long as you follow the project
-requirements.
-
-Of course, you will update `lib/cli.py` with prompts that are appropriate for
-your application, and you will update `lib/helpers.py` to replace `helper_1()`
-with a useful function based on the specific problem domain you decide to
-implement, along with adding other helper functions to the module.
-
-In the `lib/models` folder, you should rename `model_1.py` with the name of a
-data model class from your specific problem domain, and add other classes to the
-folder as needed. The file `lib/models/__init__.py` has been initialized to
-create the necessary database constants. You need to add import statements to
-the various data model classes in order to use the database constants.
-
-You are also welcome to implement a different module and directory structure.
-However, your project should be well organized, modular, and follow the design
-principal of separation of concerns, which means you should separate code
-related to:
-
-- User interface
-- Data persistence
-- Problem domain rules and logic
-
----
-
-## Updating README.md
-
-`README.md` is a Markdown file that should describe your project. You will
-replace the contents of this `README.md` file with a description of **your**
-actual project.
-
-Markdown is not a language that we cover in Flatiron's Software Engineering
-curriculum, but it's not a particularly difficult language to learn (if you've
-ever left a comment on Reddit, you might already know the basics). Refer to the
-cheat sheet in this assignments's resources for a basic guide to Markdown.
-
-### What Goes into a README?
-
-This README serves as a template. Replace the contents of this file to describe
-the important files in your project and describe what they do. Each Python file
-that you edit should get at least a paragraph, and each function should be
-described with a sentence or two.
-
-Describe your actual CLI script first, and with a good level of detail. The rest
-should be ordered by importance to the user. (Probably functions next, then
-models.)
-
-Screenshots and links to resources that you used throughout are also useful to
-users and collaborators, but a little more syntactically complicated. Only add
-these in if you're feeling comfortable with Markdown.
-
----
-
-## Conclusion
-
-A lot of work goes into a good CLI, but it all relies on concepts that you've
-practiced quite a bit by now. Hopefully this template and guide will get you off
-to a good start with your Phase 3 Project.
-
-Happy coding!
-
----
-
-## Resources
-
-- [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
+Every menu has the choice to go back to the previous menu to keep the user looped until they decide to exit the program.
