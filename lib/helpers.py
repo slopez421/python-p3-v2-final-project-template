@@ -30,7 +30,7 @@ def update_reader(id_):
     if reader := Reader.find_by_id(id_):
         try:
             name = input("Enter the reader's new name: ")
-            reader.name
+            reader.name = name
             favorite_genre = input("Enter the reader's new favorite genre: ")
             reader.favorite_genre = favorite_genre
             reader.update()
