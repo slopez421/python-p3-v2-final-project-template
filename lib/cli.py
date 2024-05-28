@@ -84,6 +84,7 @@ def book_menu_choices(reader_id):
 
 def menu():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("Welcome to the Library!")
     print("Please select an option:")
     print("0. Exit the program")
     print("1. See all Readers")
