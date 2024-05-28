@@ -7,7 +7,6 @@ from models.book import Book
 import ipdb
 
 def reset_database():
-
     Reader.drop_table()
     Book.drop_table()
 
@@ -21,5 +20,6 @@ def reset_database():
     Book.create("The Wicked King", 400, 2)
     Book.create("The Queen of Nothing", 500, 3)
     
+
 reset_database()
 ipdb.set_trace()
