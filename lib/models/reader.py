@@ -9,7 +9,7 @@ class Reader:
         self.id = id
     
     def __repr__(self):
-        return f"{self.id}: {self.name}'s favorite genre is {self.favorite_genre}."
+        return f"{self.name}'s favorite genre is {self.favorite_genre}."
     
     @property
     def name(self):
@@ -139,5 +139,5 @@ class Reader:
         rows = CURSOR.execute(sql, (self.id,)).fetchall()
         return [Book.instance_from_db(row) for row in rows]
 
-    
+   
         

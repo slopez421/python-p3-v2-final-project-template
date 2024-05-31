@@ -3,9 +3,11 @@ from models.reader import Reader
 from models.book import Book
 
 def list_all_readers():
+    count = 0
     readers = Reader.get_all()
     for reader in readers:
-        print(reader)
+        count +=1
+        print(f'{count}: {reader}')
 
 def create_reader():
     name = input("Enter the reader's name: ")
